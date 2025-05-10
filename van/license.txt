@@ -1,0 +1,11 @@
+Model Information:
+* title:	Van
+* source:	https://sketchfab.com/3d-models/van-10557fe2671445b9af1c2e435ee237ff
+* author:	RodWay (https://sketchfab.com/rodway)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Van" (https://sketchfab.com/3d-models/van-10557fe2671445b9af1c2e435ee237ff) by RodWay (https://sketchfab.com/rodway) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
