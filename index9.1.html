@@ -152,13 +152,12 @@
     <script type="importmap">
       {
         "imports": {
-          "three": "https://unpkg.com/three@0.160.1/build/three.module.js"
-         
+          "three": "https://threejs.org/build/three.module.js",
           "three/addons/": "https://threejs.org/examples/jsm/"
         }
       }
     </script>
-    <script type="module" src="./main.js">
+    <script type="module">
       import * as THREE from 'three';
       import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
       import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
