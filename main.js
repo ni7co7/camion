@@ -104,28 +104,6 @@ function main() {
         console.error('Error al cargar el modelo:', error);
     });
 
-    /* // Crear ciudad */
-    /* const loaderciudad = new GLTFLoader(); */
-    /* let ciudad; */
-    /* loader.load('./buildings_front/scene.gltf', function (gltf) { */
-    /* ciudad = gltf.scene; */
-    /* ciudad.scale.set(.1, .1, .1); */
-    /* ciudad.position.set(0, 0, 18); */
-    /* ciudad.rotation.y = 360; */
-    /* /* <ciudad class="innerHtml">cordoba</ciudad> */
-    /* /* innerHtml='asdasda'; */
-    /* // Habilitar sombras en el camión */
-    /* ciudad.traverse((child) => { */
-    /* if (child.isMesh) { */
-    /* child.castShadow = true;  // El ciudad proyecta sombras */
-    /* child.receiveShadow = true;  // El ciudad recibe sombras */
-    /* } */
-    /* }); */
-    /* scene.add(ciudad); */
-    /* }, undefined, function (error) { */
-    /* console.error('Error al cargar el modelo:', error); */
-    /* }); */
-
     // Crear ciudad 2
     const loaderciudad2 = new GLTFLoader();
     let ciudad2;
@@ -134,11 +112,10 @@ function main() {
         ciudad2.scale.set(.2, .2, .2);
         ciudad2.position.set(-19, 0, -20);
         ciudad2.rotation.y = -180;
-        // Habilitar sombras en el camión
         ciudad2.traverse((child) => {
             if (child.isMesh) {
-                child.castShadow = true;  // El ciudad proyecta sombras
-                child.receiveShadow = true;  // El ciudad recibe sombras
+                child.castShadow = true;
+                child.receiveShadow = true;
             }
              });
         scene.add(ciudad2);
@@ -146,106 +123,63 @@ function main() {
         console.error('Error al cargar el modelo:', error);
     });
 
-
-
-    /* // Crear el grid que recibirá las sombras */
-    /* const gridHelper = new THREE.GridHelper(50, 50); */
-    /* */
-    /* gridHelper.rotation.y = 0; */
-    /* */
-    /* gridHelper.receiveShadow = true; // El grid recibe sombras */
-    /* scene.add(gridHelper); */
-
-
-
-
     // Cargar las texturas de carretera y pasto
     const textureLoader = new THREE.TextureLoader();
     const roadTexture = textureLoader.load('/paviment.png');
     const grassTexture = textureLoader.load('/grass.jpg');
     const rutaTexture = textureLoader.load('/ruta.jpg');
 
-
-    // Repetir las texturas para que cubran el plano de 50x50
     roadTexture.wrapS = roadTexture.wrapT = THREE.RepeatWrapping;
     grassTexture.wrapS = grassTexture.wrapT = THREE.RepeatWrapping;
     rutaTexture.wrapS =  rutaTexture.wrapT = THREE.RepeatWrapping;
 
     roadTexture.repeat.set(1, 1);
-    grassTexture.repeat.set(1, 1); // Pasto repetido varias veces
+    grassTexture.repeat.set(1, 1);
     rutaTexture.repeat.set(1, 1);
-    // Crear geometría del plano
+
     const planeGeometry = new THREE.PlaneGeometry(50, 50);
     const planeMaterial = new THREE.MeshStandardMaterial({
-        map: grassTexture, // Por defecto pasto
+        map: grassTexture,
     });
 
-    // Crear el mesh y girarlo para que sea el suelo
     const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-    plane.rotation.x = -Math.PI / 2; // Girar 90 grados para que sea suelo
+    plane.rotation.x = -Math.PI / 2;
     plane.receiveShadow = true;
     scene.add(plane);
 
-    // Agregar pisoen el centro usando otro plano
-    const roadGeometry = new THREE.PlaneGeometry(10, 10); // 30 de ancho
+    const roadGeometry = new THREE.PlaneGeometry(10, 10);
     const roadMaterial = new THREE.MeshStandardMaterial({
         map: roadTexture
     });
 
     const road = new THREE.Mesh(roadGeometry, roadMaterial);
     road.rotation.x = -Math.PI / 2;
-
     road.position.set(-19,0,-20);
-    road.position.y = 0.01; // Para evitar el z-fighting con el pasto
+    road.position.y = 0.01;
     scene.add(road);
 
-    // Agregar ruta el centro usando otro plano
-    const rutaGeometry = new THREE.PlaneGeometry(1, 50); // 50 de ancho
+    const rutaGeometry = new THREE.PlaneGeometry(1, 50);
     const rutaMaterial = new THREE.MeshStandardMaterial({
         map: rutaTexture
     });
 
     const ruta= new THREE.Mesh(rutaGeometry, rutaMaterial);
     ruta.rotation.x = -Math.PI / 2;
-
     ruta.position.set(10,0.01,0);
-    ruta.position.y = 0.01; // Para evitar el z-fighting con el pasto
+    ruta.position.y = 0.01;
     scene.add(ruta);
 
-
-    // Agregar ruta2 el centro usando otro plano
-    const ruta2Geometry = new THREE.PlaneGeometry(12, 1); //
+    const ruta2Geometry = new THREE.PlaneGeometry(12, 1);
     const ruta2Material = new THREE.MeshStandardMaterial({
         map: rutaTexture
     });
 
     const ruta2= new THREE.Mesh(rutaGeometry, rutaMaterial);
-
     ruta2.rotation.x = -Math.PI / 2;
-    ruta2.rotation.z = Math.PI / 2.3; // Rotar 45 grados hacia la izquierda
+    ruta2.rotation.z = Math.PI / 2.3;
     ruta2.position.set(0,0.01,-15);
-    ruta2.position.y = 0.001; // Para evitar el z-fighting con el pasto
+    ruta2.position.y = 0.001;
     scene.add(ruta2);
-
-
-    // Textura del camino
-/* const rutaTexture = new THREE.TextureLoader().load('/ruta.jpg'); */
-/* const rutaMaterial = new THREE.MeshBasicMaterial({ map: rutaTexture }); */
-
-// Primer segmento del camino (horizontal)
-/* const rutaGeometry1 = new THREE.PlaneGeometry(60, 10); */
-/* const ruta1 = new THREE.Mesh(rutaGeometry1, rutaMaterial); */
-/* ruta1.rotation.x = -Math.PI / 2; */
-/* ruta1.position.set(-20, 0.01, -30); */
-/* scene.add(ruta1); */
-/* */
-// Segundo segmento del camino (vertical)
-/* const rutaGeometry2 = new THREE.PlaneGeometry(1, 40); */
-/* const ruta2 = new THREE.Mesh(rutaGeometry2, rutaMaterial); */
-/* ruta2.rotation.x = -Math.PI / 2; */
-/* ruta2.position.set(10, 0.01, -10); */
-/* scene.add(ruta2); */
-
 
     const keys = {};
     window.addEventListener('keydown', (event) => (keys[event.key.toLowerCase()] = true));
@@ -254,81 +188,113 @@ function main() {
     const truckSpeed = 0.3;
     const rotationSpeed = 0.05;
     let followTruck = false;
+
+    // Variables para controles táctiles
+    let touchStartX = null;
+    let touchStartY = null;
+    const swipeThreshold = 50; // Sensibilidad del deslizamiento
+
+    canvas.addEventListener('touchstart', (event) => {
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+    }, false);
+
+    canvas.addEventListener('touchend', (event) => {
+        touchStartX = null;
+        touchStartY = null;
+    }, false);
+
+    canvas.addEventListener('touchmove', (event) => {
+        if (!touchStartX || !touchStartY || !truck) return;
+
+        const touchEndX = event.touches[0].clientX;
+        const touchEndY = event.touches[0].clientY;
+
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            // Deslizamiento horizontal (izquierda/derecha para girar)
+            if (deltaX > swipeThreshold) {
+                truck.rotation.y -= rotationSpeed; // Girar a la derecha
+            } else if (deltaX < -swipeThreshold) {
+                truck.rotation.y += rotationSpeed; // Girar a la izquierda
+            }
+        } else {
+            // Deslizamiento vertical (arriba/abajo para avanzar/retroceder)
+            if (deltaY < -swipeThreshold) {
+                const forwardDirection = new THREE.Vector3(0, 0, 1).applyQuaternion(truck.quaternion);
+                truck.position.add(forwardDirection.multiplyScalar(truckSpeed)); // Avanzar
+            } else if (deltaY > swipeThreshold) {
+                const backwardDirection = new THREE.Vector3(0, 0, -1).applyQuaternion(truck.quaternion);
+                truck.position.add(backwardDirection.multiplyScalar(truckSpeed)); // Retroceder
+            }
+        }
+
+        touchStartX = touchEndX;
+        touchStartY = touchEndY;
+    }, false);
+
+
     function moveTruck() {
-
         if (truck) {
-            const newPosition = truck.position.clone(); // Copiamos la posición actual
+            const newPosition = truck.position.clone();
 
-            if (keys['s']) {
+            if (keys['s'] || keys['arrowdown']) {
                 newPosition.z -= Math.cos(truck.rotation.y) * truckSpeed;
                 newPosition.x -= Math.sin(truck.rotation.y) * truckSpeed;
             }
-            if (keys['w']) {
+            if (keys['w'] || keys['arrowup']) {
                 newPosition.z += Math.cos(truck.rotation.y) * truckSpeed;
                 newPosition.x += Math.sin(truck.rotation.y) * truckSpeed;
             }
-            if (keys['a']) {
+            if (keys['a'] || keys['arrowleft']) {
                 truck.rotation.y += rotationSpeed;
             }
-            if (keys['d']) {
+            if (keys['d'] || keys['arrowright']) {
                 truck.rotation.y -= rotationSpeed;
             }
 
             // Hacer que la cámara siga siempre al camion desde atrás */
-            /* const cameraOffset = new THREE.Vector3(0, 2, -3); // Cámara detrás y arriba  */
-            /* const rotatedOffset = cameraOffset.clone().applyMatrix4(new THREE.Matrix4().makeRotationY(truck.rotation.y));  */
-            /* const newCameraPos = truck.position.clone().add(rotatedOffset);  */
-            /* camera.position.lerp(newCameraPos, 0.1); // Movimiento suave  */
-            /* camera.lookAt(truck.position); */
+            const cameraOffset = new THREE.Vector3(0, 2, -3); // Cámara detrás y arriba
+            const rotatedOffset = cameraOffset.clone().applyMatrix4(new THREE.Matrix4().makeRotationY(truck.rotation.y));
+            const newCameraPos = truck.position.clone().add(rotatedOffset);
+            camera.position.lerp(newCameraPos, 0.1); // Movimiento suave
+            camera.lookAt(truck.position);
 
-            // **Limitar el movimiento del camión dentro de (-50, 50) en X y Z**
-            /* newPosition.x = THREE.MathUtils.clamp(newPosition.x, -25, 25); */
-            /* newPosition.z = THREE.MathUtils.clamp(newPosition.z, -25, 25); */
             followTruck = true;
-            // Aplicamos la posición limitada
             truck.position.copy(newPosition);
+        }
+    }
 
-            // **Ajustar la cámara para que siga al camión**
-            /* const offset = new THREE.Vector3(0, 3, -10); // Más alto y más lejos */
-            /* const cameraPosition = offset.clone().applyMatrix4(truck.matrixWorld); */
-            /* camera.position.lerp(cameraPosition, 0.1); */
-            /* camera.lookAt(truck.position); */
-             }
-         }
-
-    
-    
 
     function createSmoke() {
         const smokeGeometry = new THREE.SphereGeometry(0.2, 8, 8);
         const smokeMaterial = new THREE.MeshBasicMaterial({
-            color: 0x555555, // Gris oscuro
+            color: 0x555555,
             transparent: true,
             opacity: 0.3
         });
         const smoke = new THREE.Mesh(smokeGeometry, smokeMaterial);
         if (truck) {
-            // Ajustar la dirección y posición del humo para que suba y esté más espaciado
             smoke.position.set(
                 truck.position.x - Math.sin(truck.rotation.y),
-                truck.position.y + .2,  // Más alto para que suba
+                truck.position.y + .2,
                 truck.position.z - Math.cos(truck.rotation.y)
             );
             scene.add(smoke);
 
-            // Crear variación en el tamaño y color del humo
             const randomColor = Math.random() > 0.5 ? 0x888888 : 0x666666;
             smoke.material.color.set(randomColor);
 
-            // Animar el humo para que suba y se disipe
-            const smokeLifetime = 2000;  // Duración del humo
-            const displacementSpeed = 0.02;  // Velocidad de ascenso del humo
+            const smokeLifetime = 2000;
+            const displacementSpeed = 0.02;
 
             function animateSmoke() {
-                smoke.position.y += displacementSpeed;  // Subir el humo
-                smoke.material.opacity -= 0.001;  // Desvanecimiento gradual
+                smoke.position.y += displacementSpeed;
+                smoke.material.opacity -= 0.001;
                 if (smoke.material.opacity <= 0) {
-                    scene.remove(smoke);  // Eliminar el humo cuando se desvanece
+                    scene.remove(smoke);
                 } else {
                     requestAnimationFrame(animateSmoke);
                 }
@@ -336,17 +302,11 @@ function main() {
             animateSmoke();
         }
     }
-    
+
 
     function animate() {
- 
-
- 
-
- 
-
         moveTruck();
-        if (truck && (keys['w'] || keys['s'])) {
+        if (truck && (keys['w'] || keys['s'] || keys['arrowup'] || keys['arrowdown'])) {
             createSmoke();
             if (followTruck) {
                 camera.position.set(truck.position.x + 1, 2, truck.position.z +  6);
@@ -354,20 +314,10 @@ function main() {
                 scene.fog = new THREE.FogExp2( 0xcccccc, 0.023 );
            }
         }
-        /* if (truck && (keys['a'] || keys['d'])) { */
-        /*      createSmoke(); */
-        /*      if (followTruck) { */
-        /*       camera.position.set(truck.position.x + 0, 4, truck.position.z +  6) */;
-        /*         camera.lookAt(ciudad2.position); */
-        /*         scene.fog = new THREE.FogExp2( 0xcccccc, 0.023 ); */
-        /*     }  */
-        /*    } */
-        /* controls.update(); */
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
-    
     }
- 
+
     animate();
 }
 
