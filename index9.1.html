@@ -24,7 +24,7 @@
      
        /*   background: linear-gradient(120deg, #004d99, #00ff88);  */
         /*  background: transparent; */ 
-        background-color: #cfaeae;
+       
          
       }
       #loading img {
@@ -179,7 +179,7 @@
        /*  renderer.shadowMap.type = THREE.PCFSoftShadowMap; */
 
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.5, 100);
-        camera.position.set(10, 15, 29);
+        camera.position.set(0, 5, 0);
         
 
         const controls = new OrbitControls(camera, canvas);
@@ -229,8 +229,8 @@
         loader.load('./van/scene.gltf', function (gltf) {
           truck = gltf.scene;
           truck.scale.set(1, 1, 1);
-          truck.position.set(10, 0, 23);
-          truck.rotation.y = -2;
+          truck.position.set(0, 0, 0);
+          truck.rotation.y = 0;
 
           // Habilitar sombras en el camión
           truck.traverse((child) => {
@@ -417,16 +417,16 @@
                truck.rotation.y -= rotationSpeed;
              }
 
-             /*  // Hacer que la cámara siga siempre al camion desde atrás */
-             /*   const cameraOffset = new THREE.Vector3(0, 3, -8); // Cámara detrás y arriba  */
-             /*   const rotatedOffset = cameraOffset.clone().applyMatrix4(new THREE.Matrix4().makeRotationY(truck.rotation.y));  */
-             /*   const newCameraPos = truck.position.clone().add(rotatedOffset);  */
-             /*   camera.position.lerp(newCameraPos, 0.1); // Movimiento suave  */
-             /*   camera.lookAt(truck.position);  */
+               // Hacer que la cámara siga siempre al camion desde atrás */
+                const cameraOffset = new THREE.Vector3(0, 2, -3); // Cámara detrás y arriba  */
+                const rotatedOffset = cameraOffset.clone().applyMatrix4(new THREE.Matrix4().makeRotationY(truck.rotation.y)); 
+                const newCameraPos = truck.position.clone().add(rotatedOffset);  
+                camera.position.lerp(newCameraPos, 0.1); // Movimiento suave  */
+                camera.lookAt(truck.position); 
          
              // **Limitar el movimiento del camión dentro de (-50, 50) en X y Z**
-             newPosition.x = THREE.MathUtils.clamp(newPosition.x, -25, 25);
-             newPosition.z = THREE.MathUtils.clamp(newPosition.z, -25, 25);
+            /*  newPosition.x = THREE.MathUtils.clamp(newPosition.x, -25, 25); */
+            /*  newPosition.z = THREE.MathUtils.clamp(newPosition.z, -25, 25); */
              followTruck = true;
              // Aplicamos la posición limitada
              truck.position.copy(newPosition);
@@ -491,7 +491,7 @@
           if (truck && (keys['w'] || keys['s'])) {
             createSmoke();
             if (followTruck) {
-               camera.position.set(truck.position.x + 0, 4, truck.position.z +  6);
+               camera.position.set(truck.position.x + 1, 2, truck.position.z +  6);
                camera.lookAt(truck.position);
                scene.fog = new THREE.FogExp2( 0xcccccc, 0.023 );
            }

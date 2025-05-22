@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boffa</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="loading">
+        <div id="titulo">
+            <img src="/logo.jpg" alt="logo" width="20">
+            <h1>BO<span>FFA</span></h1>
+        </div>
+        <div id="subtitulo" >
+            <h6>
+                repuestos automotor | rurales | electrónica | textil | química | gráfica | documentos | trámites | pagos | despachos a otras provincias
+            </h6>
+            <h4>Cargando...</h4>
+        </div>
+    </div>
+    <h1 id="texto"></h1>
+    <canvas id="c"></canvas>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://threejs.org/build/three.module.js",
+                "three/addons/": "https://threejs.org/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
